@@ -27,6 +27,7 @@ if (window.$ !== undefined) {
             // prepare
             presenterView.storeNotes();
             presenterView.storeNextSlide();
+            presenterView.storeCurrentSlide();
 
             // write prepared content to localStorage
             presenterView.write();
@@ -53,10 +54,9 @@ var presenterView = (function() {
         var lastElemsIndex = hrefArr.length - 1;
 
         delete hrefArr[lastElemsIndex];
-        delete hrefArr[lastElemsIndex - 1];
 
         var baseUrl = hrefArr.join('/');
-        var urlToPresenterView = baseUrl + 'extensions/presenterview/deck.presenterview.html';
+        var urlToPresenterView = baseUrl + 'deck.presenterview.html';
         
         return urlToPresenterView;
     };
@@ -90,6 +90,11 @@ var presenterView = (function() {
             return '';
         }
     };
+    
+    var getCurrentSlide = function() {
+      return currentItemsContent;
+    };
+
 
     // public
     return {
@@ -140,6 +145,10 @@ var presenterView = (function() {
         storeNextSlide: function() {
             addItemToLocalStorageArray('next_slide', getNextSlide());
         },
+
+        storeCurrentSlide: function() {
+            addItemToLocalStorageArray('current_slide', getCurrentSlide());
+        },
         
         /**
          * Writes the items that are stored in writeToLocalStorage[] to the localStorage - should be called after 
@@ -152,6 +161,10 @@ var presenterView = (function() {
             
             if (writeToLocalStorage.next_slide !== 'undefined') {
                 localStorage.setItem('next_slide', writeToLocalStorage['next_slide']);
+            }
+
+            if (writeToLocalStorage.current_slide !== 'undefined') {
+                localStorage.setItem('current_slide', writeToLocalStorage['current_slide']);
             }
         }
     }

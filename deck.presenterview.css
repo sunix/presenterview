@@ -13,6 +13,11 @@
   float: left;
 }
 
+#current-slide {
+float: right;
+}
+
+
 #note {
     width: 40%;
 }
