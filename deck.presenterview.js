@@ -73,7 +73,10 @@ var presenterView = (function() {
         var endOfComment   = currentItemsContent.indexOf('-->');
 
         if (startOfComment !== -1 && endOfComment !== -1) {
-            return currentItemsContent.substring(startOfComment + 4, endOfComment);
+            var notes = currentItemsContent.substring(startOfComment + 4, endOfComment);
+            var converter = new Markdown.Converter();
+            notes = converter.makeHtml(notes);
+            return notes;
         }
         
         return '';
